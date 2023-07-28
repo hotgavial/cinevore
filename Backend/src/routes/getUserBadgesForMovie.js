@@ -10,6 +10,18 @@ async function createBadge(category, step, idUser, title, totalUsers, whereClaus
             title: title
         }
     })
+    if(!badge) {
+        return  {
+            title: title,
+            category: category,
+            currentLevel: 0,
+            moviesSeen: 0,
+            target: step,
+            progress: '0%',
+            ranking: totalUsers,
+            totalParticipants: totalUsers
+        }
+    }
     const ranking = await Badge.count({
         where: {
             title: title,
@@ -67,28 +79,15 @@ module.exports = (app) => {
 
             const totalUsers = await User.count()
 
-            const review = await Review.findOne({
-                where: { 
-                    idMovie: idMovie,
-                    idUser: idUser
-                },
+            const movie = await Movie.findByPk(idMovie, {
                 include: [
                     {
-                        model: Movie,
-                        include: [{
-                            model: Actor,
-                            include: Movie
-                        }]
+                        model: Actor,
+                        include: Movie
                     }
                 ]
             })
-
-            const movie = review.Movie
             
-            if (!movie) {
-                return res.status(404).json({ message: "Movie not found." });
-            }
-
             let badge = {}
             let category = ''
             let title = ''
