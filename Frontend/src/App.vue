@@ -20,7 +20,6 @@ main {
   align-items: center;
   background-color: darkblue;
   min-height: 100vh;
-  width: 100vw;
 }
 
 .main-content {

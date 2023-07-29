@@ -1,4 +1,3 @@
-const sequelize = require('../db/sequelize');
 const Movie = require('../models/Movie')
 
 module.exports = (app) => {

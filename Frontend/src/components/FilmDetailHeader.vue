@@ -1,16 +1,26 @@
 <script setup>
-defineProps(['movie', 'spectatorsAverageGrade'])
+import { computed } from 'vue'
+import UserGrade from './UserGrade.vue'
+import SpectatorsGrade from './SpectatorsGrade.vue'
+
+const props = defineProps(['movie', 'spectatorsAverageGrade'])
+
+const posterLink = computed(() => {
+    const title = props.movie?.title.toLowerCase().replace(/ /g, '-')
+    return new URL(`/src/assets/images/${title}.jpg`, import.meta.url).href   
+})
+
 </script>
 
 <template>
   <div class="film-detail-header">
         <h1 class="film-detail-header__title">{{ movie?.title }}</h1>
         <div class="film-detail-header__main">
-            <div class="film-detail-header__spectators-grade-div">
-                <div>Note Moyenne des spectateurs</div>
-                <div class="film-detail-header__displayed-spectators-grade">{{ spectatorsAverageGrade }}</div>
+            <div class="film-detail-header__general-grade">
+                <SpectatorsGrade :spectators-average-grade='spectatorsAverageGrade'/>
+                <UserGrade />
             </div>
-            <img alt="Poster" class="film-detail-header__poster" src="@/assets/images/edward-scissorhands.jpg" />
+            <img alt="Poster" class="film-detail-header__poster" :src="posterLink" />
             <div>
                 <div>Votre Note</div>
             </div>
@@ -29,38 +39,22 @@ defineProps(['movie', 'spectatorsAverageGrade'])
 
     &__main {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-evenly;
         width: 100%;
 
         > div {
             flex-grow: 1;
             flex-basis: 0;
             display: flex;
-            justify-content: center;
+            justify-content: space-evenly;
         }
     }
 
-    &__spectators-grade-div {
+    &__general-grade {
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: start !important;
-    }
-
-    &__displayed-spectators-grade {
-        margin-top: 1rem;
-        display: inline-flex; /* Utilisez display: flex avec inline-flex pour centrer le texte */
-        justify-content: center; /* Centre le contenu horizontalement */
-        align-items: center; /* Centre le contenu verticalement */
-        background-color: black;
-        color: greenyellow;
-        font-weight: bold;
-        font-size: 2rem;
-        border: green 0.4rem solid;
-        border-radius: 50%; /* 50% du rayon du cercle crée une forme circulaire */
-        padding: 10px; /* Espacement intérieur pour éloigner le contenu du bord du cercle */
-        width: 100px;
-        height: 100px;
+        justify-content: space-evenly;
     }
 
     &__poster {

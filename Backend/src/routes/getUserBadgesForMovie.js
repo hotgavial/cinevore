@@ -1,4 +1,3 @@
-const sequelize = require('../db/sequelize');
 const { Op } = require('sequelize');
 const { Actor, Movie, Review, User, Badge, ActorMovie } = require('../models/Associations');
 
