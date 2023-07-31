@@ -8,6 +8,7 @@ module.exports = (app) => {
                 idMovie: req.params.idMovie
             }
         })
+        console.log(review)
         res.json(review)
     })
 }

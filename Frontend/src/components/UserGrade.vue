@@ -1,19 +1,26 @@
 <script setup>
 import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
 
 const userReview = ref(null)
 const userGrade = ref(null)
+const userReviewId = ref(null)
 const isHovered = ref(false)
 const hoveredIndex = ref(0)
 
+const route = useRoute()
+
 onMounted(() => {
-    fetch(`http://localhost:3000/api/review/1/2`, {
+    fetch(`http://localhost:3000/api/review/${route.params.idMovie}/2`, {
             method: "GET",
         })
         .then((response) => response.json())
         .then((data) => {
-            userReview.value = data.review
-            userGrade.value = data.grade
+            if (data !== null) {
+                userReview.value = data.review ?? null;
+                userGrade.value = data.grade ?? null;
+                userReviewId.value = data.idReview ?? null;
+            }
         })
         .catch((error) => console.error(error));
 })
@@ -37,7 +44,33 @@ function onMouseLeave() {
 }
 
 function changeUserGrade(index) {
-    userGrade.value = index
+    if(userGrade.value) {
+        fetch(`http://localhost:3000/changeGrade/${userReviewId.value}`, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({grade: index}),
+        })
+        .then((response) => response.json())
+        .then(() => {
+            userGrade.value = index;
+        })
+        .catch((error) => console.error(error));
+    } else {
+         fetch(`http://localhost:3000/addGrade`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({grade: index, idUser: 2, idMovie: route.params.idMovie}),
+        })
+        .then((response) => response.json())
+        .then(() => {
+            userGrade.value = index;
+        })
+        .catch((error) => console.error(error));
+    }
 }
 
 </script>

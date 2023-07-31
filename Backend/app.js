@@ -22,5 +22,9 @@ require('./src/routes/getUserBadgesForMovie')(app)
 
 require('./src/routes/getReviewForUser')(app)
 
+require('./src/routes/addUserReview')(app)
+
+require('./src/routes/updateUserReview')(app)
+
 
 app.listen(port, () => console.log(`Application started on http://localhost:${port}`))
