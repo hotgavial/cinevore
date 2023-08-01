@@ -1,6 +1,9 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { useUserInfoStore } from '../stores/userInfo'
+
+const userInfo = useUserInfoStore()
 
 const userReview = ref(null)
 const userGrade = ref(null)
@@ -11,7 +14,7 @@ const hoveredIndex = ref(0)
 const route = useRoute()
 
 onMounted(() => {
-    fetch(`http://localhost:3000/api/review/${route.params.idMovie}/2`, {
+    fetch(`http://localhost:3000/api/review/${route.params.idMovie}/${userInfo.idUser}`, {
             method: "GET",
         })
         .then((response) => response.json())

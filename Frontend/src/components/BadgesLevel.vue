@@ -1,13 +1,16 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { useUserInfoStore } from '../stores/userInfo'
+
+const userInfo = useUserInfoStore()
 
 const badges = ref([])
 const route = useRoute()
 
 onMounted(() => {
     const idMovie = route.params.idMovie;
-    fetch(`http://localhost:3000/api/badges/${idMovie}/2`, {
+    fetch(`http://localhost:3000/api/badges/${idMovie}/${userInfo.idUser}`, {
         method: "GET",
     })
     .then((response) => response.json())
