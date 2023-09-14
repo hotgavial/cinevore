@@ -1,5 +1,10 @@
 <script setup>
-const props = defineProps(['redactionGrade'])
+const props = defineProps({
+  redactionGrade: {
+    type: Number,
+    default: 1
+  }
+});
 
 function determinateClassForStar(index) {
         return index <= props.redactionGrade ? 'fa fa-star checked' : 'fa, fa-star'

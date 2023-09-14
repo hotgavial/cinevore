@@ -1,9 +1,23 @@
 <script setup>
 import { computed } from 'vue'
 import UserGrade from './UserGrade.vue'
+import TechnicalInfo from "./TechnicalInfo.vue";
 import SpectatorsGrade from './SpectatorsGrade.vue'
 
-const props = defineProps(['movie', 'spectatorsAverageGrade'])
+import { useUserInfoStore } from '../stores/userInfo'
+
+    const userInfo = useUserInfoStore()
+
+const props = defineProps({
+  movie: {
+    type: Object,
+    default: null
+  },
+  spectatorsAverageGrade: {
+    type: Number,
+    default: 0
+  }
+});
 
 const posterLink = computed(() => {
     const title = props.movie?.title.toLowerCase().replace(/ /g, '-')
@@ -18,11 +32,11 @@ const posterLink = computed(() => {
         <div class="film-detail-header__main">
             <div class="film-detail-header__general-grade">
                 <SpectatorsGrade :spectators-average-grade='spectatorsAverageGrade'/>
-                <UserGrade />
+                <UserGrade v-if="userInfo.idUser !== 0" />
             </div>
             <img alt="Poster" class="film-detail-header__poster" :src="posterLink" />
             <div>
-                <div>Votre Note</div>
+                <TechnicalInfo :movie='movie'/>
             </div>
         </div>
     </div> 

@@ -9,8 +9,8 @@ async function createBadge(category, step, idUser, title, totalUsers, whereClaus
             title: title
         }
     })
-    if(!badge) {
-        return  {
+    if (!badge) {
+        return {
             title: title,
             category: category,
             currentLevel: 0,
@@ -30,21 +30,21 @@ async function createBadge(category, step, idUser, title, totalUsers, whereClaus
         }
     })
     currentLevel = Math.floor(badge.moviesSeen / step)
-    if(['actress', 'actor', 'director'].includes(category)) {
+    if (['actress', 'actor', 'director'].includes(category)) {
         totalMovies = await ActorMovie.count({
             where: {
                 idActor: whereClause
             }
         })
     }
-    if(category === 'year') {
+    if (category === 'year') {
         totalMovies = await Movie.count({
             where: {
                 year: whereClause
             }
         })
     }
-    if(category === 'decade') {
+    if (category === 'decade') {
         totalMovies = await Movie.count({
             where: {
                 year: {
@@ -66,12 +66,12 @@ async function createBadge(category, step, idUser, title, totalUsers, whereClaus
         totalParticipants: totalUsers
     }
     return newBadge
-  }
+}
 
 module.exports = (app) => {
     app.get('/api/badges/:idMovie/:idUser', async (req, res) => {
         const badges = []
-        
+
         try {
             const idMovie = req.params.idMovie
             const idUser = req.params.idUser
@@ -86,7 +86,7 @@ module.exports = (app) => {
                     }
                 ]
             })
-            
+
             let badge = {}
             let category = ''
             let title = ''
@@ -98,10 +98,10 @@ module.exports = (app) => {
             decade = parseInt(decade)
             badge = await createBadge('decade', 60, idUser, `Films des années ${decade}`, totalUsers, decade)
             badges.push(badge)
-            
+
             for (let actor of movie.Actors) {
-                if(actor.hasBadge && ['actor', 'director'].includes(actor.job)) {
-                    if (actor.job === 'director') {
+                if (actor.hasBadge && ['actor', 'director'].includes(actor.ActorMovie.job)) {
+                    if (actor.ActorMovie.job === 'director') {
                         category = 'director'
                         title = `Films de ${actor.firstName} ${actor.lastName}`
                         badge = await createBadge(category, 5, idUser, title, totalUsers, actor.idActor)

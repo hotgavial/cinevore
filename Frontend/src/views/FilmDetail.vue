@@ -18,18 +18,29 @@
         title: '',
         originalTitle: null,
         year: 0,
+        crew: null
     })
 
     const route = useRoute()
 
     onMounted(() => {
-        const idMovie = route.params.idMovie;
+        const {idMovie} = route.params;
         fetch(`http://localhost:3000/api/movie/${idMovie}`, {
             method: "GET",
         })
         .then((response) => response.json())
         .then((data) => {
-            movie.value = data
+            console.log(data)
+            movie.value.title = data.title
+            movie.value.originalTitle = data.originalTitle
+            movie.value.year = data.year
+            const directors = data.Actors.filter(actor => actor.ActorMovie.job === 'director');
+            const actors = data.Actors.filter(actor => actor.ActorMovie.job === 'actor');
+            const crew = {
+                directors,
+                actors
+            }
+            movie.value.crew = crew
         })
         .catch((error) => console.error(error));
     })
@@ -43,7 +54,16 @@
                 <RedactionGrade :redaction-grade='numberStarsRedaction' />
                 <BadgesLevel /> 
             </div>
-           
+            <div>
+                <h3>Bande-Annonce</h3>
+                <iframe
+                    width="560"
+                    height="315"
+                    src="https://www.youtube.com/embed/r6IwTHOKLGc"
+                    frameborder="0"
+                    allowfullscreen
+                ></iframe>
+            </div>
             <div>
                 Fiche Technique
             </div>

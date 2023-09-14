@@ -1,6 +1,9 @@
 <script setup>
     import { ref } from 'vue' 
     import TextInput from './TextInput.vue'
+    import { useUserInfoStore } from '../stores/userInfo'
+
+    const userInfo = useUserInfoStore()
 
     const searchText = ref('')
 </script>
@@ -11,7 +14,8 @@
             <TextInput v-model="searchText" width="80%" placeholder="Rechercher" height="50%" />
         </div>
         <div class="main-header__website-title">Cinévore</div>
-        <div>Espace Utilisateur</div>
+        <div v-if="userInfo.idUser === 0"><router-link to="/signIn">Se Connecter</router-link></div>
+        <div v-else><router-link :to="'/user/' + userInfo.id">Espace Utilisateur</router-link></div>
     </header>
 </template>
 

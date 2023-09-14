@@ -6,7 +6,6 @@ module.exports = (app) => {
 
         try {
             const { pseudo, password } = req.body;
-            console.log(req.body)
             const existingUser = await User.findOne({ where: { pseudo } });
 
             if (existingUser) {

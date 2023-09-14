@@ -1,8 +1,12 @@
-const Movie = require('../models/Movie')
+const { Movie, Actor, ActorMovie } = require('../models/Associations')
 
 module.exports = (app) => {
     app.get('/api/movie/:id', async (req, res) => {
-        const movie = await Movie.findByPk(req.params.id);
+        const movie = await Movie.findByPk(req.params.id, {
+            include: [
+                { model: Actor }
+            ]
+        });
         res.json(movie)
     })
 }

@@ -31,9 +31,9 @@ onMounted(() => {
 function determinateClassForStar(index) {
     if(isHovered.value) {
         return index <= hoveredIndex.value ? 'fa fa-star hovered' : 'fa fa-star'
-    } else {
+    } 
         return index <= userGrade.value ? 'fa fa-star checked' : 'fa fa-star'
-    }
+    
     
 }
 
