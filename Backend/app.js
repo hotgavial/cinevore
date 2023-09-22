@@ -28,5 +28,7 @@ require('./src/routes/updateUserReview')(app)
 
 require('./src/routes/signIn')(app)
 
+require('./src/routes/addTrailer')(app)
+
 
 app.listen(port, () => console.log(`Application started on http://localhost:${port}`))

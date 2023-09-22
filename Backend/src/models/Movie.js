@@ -19,9 +19,13 @@ const Movie = sequelize.define('Movie', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  trailer: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
 }, {
-  tableName: 'movies', 
-  timestamps: false,   
+  tableName: 'movies',
+  timestamps: false,
 });
 
 module.exports = Movie;

@@ -5,6 +5,8 @@
     import FilmDetailHeader from '../components/FilmDetailHeader.vue'
     import RedactionGrade from '../components/RedactionGrade.vue'
     import BadgesLevel from '../components/BadgesLevel.vue'
+    import TrailerBox from '../components/TrailerBox.vue';
+    import AddTrailerLink from '../components/AddTrailerLink.vue';
 
     useHead({
         link: [
@@ -18,9 +20,11 @@
         title: '',
         originalTitle: null,
         year: 0,
-        crew: null
+        crew: null,
+        trailer: null
     })
 
+    const isOpenModalTrailer = ref(false)
     const route = useRoute()
 
     onMounted(() => {
@@ -30,10 +34,10 @@
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log(data)
             movie.value.title = data.title
             movie.value.originalTitle = data.originalTitle
             movie.value.year = data.year
+            movie.value.trailer = data.trailer
             const directors = data.Actors.filter(actor => actor.ActorMovie.job === 'director');
             const actors = data.Actors.filter(actor => actor.ActorMovie.job === 'actor');
             const crew = {
@@ -47,6 +51,7 @@
 </script>
 
 <template>
+    <AddTrailerLink v-if="isOpenModalTrailer" @close-modal-trailer="isOpenModalTrailer = false" />
     <div class="film-detail">
         <FilmDetailHeader :movie='movie' :spectators-average-grade='spectatorsAverageGrade'/>
         <div class="film-detail__body">
@@ -55,14 +60,7 @@
                 <BadgesLevel /> 
             </div>
             <div>
-                <h3>Bande-Annonce</h3>
-                <iframe
-                    width="560"
-                    height="315"
-                    src="https://www.youtube.com/embed/r6IwTHOKLGc"
-                    frameborder="0"
-                    allowfullscreen
-                ></iframe>
+                <TrailerBox :trailer-link='movie.trailer' @open-modal-trailer="isOpenModalTrailer = true"/>
             </div>
             <div>
                 Fiche Technique
