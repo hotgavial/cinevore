@@ -47,11 +47,14 @@ function onMouseLeave() {
 }
 
 function changeUserGrade(index) {
-    if(userGrade.value) {
+    const token = localStorage.getItem('token')
+    if(token) {
+        if(userGrade.value) {
         fetch(`http://localhost:3000/changeGrade/${userReviewId.value}`, {
             method: "PUT",
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({grade: index}),
         })
@@ -65,6 +68,7 @@ function changeUserGrade(index) {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({grade: index, idUser: 2, idMovie: route.params.idMovie}),
         })
@@ -74,6 +78,8 @@ function changeUserGrade(index) {
         })
         .catch((error) => console.error(error));
     }
+    }
+    
 }
 
 </script>

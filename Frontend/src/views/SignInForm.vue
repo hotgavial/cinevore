@@ -32,6 +32,7 @@ function submitForm() {
       connexionError.value = false;
       localStorage.setItem('pseudo', data.pseudo);
       localStorage.setItem('idUser', data.idUser);
+      localStorage.setItem('token', data.token);
       userInfo.setIdUser(data.idUser);
       router.push({ path: '/film/1' });
     }
