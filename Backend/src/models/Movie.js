@@ -28,4 +28,16 @@ const Movie = sequelize.define('Movie', {
   timestamps: false,
 });
 
+Movie.prototype.calculateAverageGrade = async function () {
+  const reviews = await this.getReviews();
+  if (reviews.length === 0) {
+    return null;
+  }
+
+  const totalGrade = reviews.reduce((sum, review) => sum + review.grade, 0);
+  const averageGrade = totalGrade / reviews.length;
+
+  return averageGrade.toFixed(1);
+};
+
 module.exports = Movie;

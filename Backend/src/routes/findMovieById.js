@@ -7,6 +7,8 @@ module.exports = (app) => {
                 { model: Actor }
             ]
         });
+        const averageGrade = await movie.calculateAverageGrade();
+        movie.dataValues.averageGrade = averageGrade;
         res.json(movie)
     })
 }

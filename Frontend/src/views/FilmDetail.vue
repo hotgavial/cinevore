@@ -15,7 +15,6 @@
     });
 
     const numberStarsRedaction = ref(10)
-    const spectatorsAverageGrade = ref(7.6)
     const movie = ref({
         title: '',
         originalTitle: null,
@@ -38,6 +37,7 @@
             movie.value.originalTitle = data.originalTitle
             movie.value.year = data.year
             movie.value.trailer = data.trailer
+            movie.value.averageGrade = data.averageGrade;
             const directors = data.Actors.filter(actor => actor.ActorMovie.job === 'director');
             const actors = data.Actors.filter(actor => actor.ActorMovie.job === 'actor');
             const crew = {
@@ -53,7 +53,7 @@
 <template>
     <AddTrailerLink v-if="isOpenModalTrailer" @close-modal-trailer="isOpenModalTrailer = false" />
     <div class="film-detail">
-        <FilmDetailHeader :movie='movie' :spectators-average-grade='spectatorsAverageGrade'/>
+        <FilmDetailHeader :movie='movie'/>
         <div class="film-detail__body">
             <div class="film-detail__body-1">
                 <RedactionGrade :redaction-grade='numberStarsRedaction' />

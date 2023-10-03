@@ -14,11 +14,11 @@ const actors = computed(() => (props.movie?.crew?.actors?.length > 0 ? props.mov
 </script>
 
 <template>
-    <div v-if="movie" class="technical-info">
-        <p>Année: {{ movie.year }}</p>
-        <p>Réalisé par : {{ directors }}</p>
-        <p>Acteurs : {{ actors }}</p>
-    </div>
+  <div v-if="movie" class="technical-info">
+      <p>Année: {{ movie.year }}</p>
+      <p>Réalisé par : {{ directors }}</p>
+      <p>Acteurs : {{ actors }}</p>
+  </div>
 </template>
 
 <style scoped lang='scss'>

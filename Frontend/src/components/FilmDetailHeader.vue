@@ -31,7 +31,7 @@ const posterLink = computed(() => {
         <h1 class="film-detail-header__title">{{ movie?.title }}</h1>
         <div class="film-detail-header__main">
             <div class="film-detail-header__general-grade">
-                <SpectatorsGrade :spectators-average-grade='spectatorsAverageGrade'/>
+                <SpectatorsGrade :spectators-average-grade='movie?.averageGrade'/>
                 <UserGrade v-if="userInfo.idUser !== 0" />
             </div>
             <img alt="Poster" class="film-detail-header__poster" :src="posterLink" />
