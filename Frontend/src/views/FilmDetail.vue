@@ -16,6 +16,7 @@
 
     const numberStarsRedaction = ref(10)
     const movie = ref({
+        idMovie: 0,
         title: '',
         originalTitle: null,
         year: 0,
@@ -33,6 +34,7 @@
         })
         .then((response) => response.json())
         .then((data) => {
+            movie.value.idMovie = data.idMovie
             movie.value.title = data.title
             movie.value.originalTitle = data.originalTitle
             movie.value.year = data.year
@@ -164,8 +166,4 @@
                 font-weight: bold;
                 align-self: flex-start;
             }
-
-    .checked {
-        color: orange;
-    }
 </style>

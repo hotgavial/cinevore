@@ -1,8 +1,8 @@
 <script setup>
-import { computed } from 'vue'
 import UserGrade from './UserGrade.vue'
 import TechnicalInfo from "./TechnicalInfo.vue";
 import SpectatorsGrade from './SpectatorsGrade.vue'
+import PosterImg from './PosterImg.vue';
 
 import { useUserInfoStore } from '../stores/userInfo'
 
@@ -19,22 +19,17 @@ const props = defineProps({
   }
 });
 
-const posterLink = computed(() => {
-    const title = props.movie?.title.toLowerCase().replace(/ /g, '-')
-    return new URL(`/src/assets/images/${title}.jpg`, import.meta.url).href   
-})
-
 </script>
 
 <template>
   <div class="film-detail-header">
-        <h1 class="film-detail-header__title">{{ movie?.title }}</h1>
+        <h1 class="film-detail-header__title">{{ props.movie?.title }}</h1>
         <div class="film-detail-header__main">
             <div class="film-detail-header__general-grade">
-                <SpectatorsGrade :spectators-average-grade='movie?.averageGrade'/>
+                <SpectatorsGrade :spectators-average-grade='props.movie?.averageGrade'/>
                 <UserGrade v-if="userInfo.idUser !== 0" />
             </div>
-            <img alt="Poster" class="film-detail-header__poster" :src="posterLink" />
+            <PosterImg :id-movie="props.movie?.idMovie" />
             <div>
                 <TechnicalInfo :movie='movie'/>
             </div>

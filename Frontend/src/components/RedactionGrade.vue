@@ -34,4 +34,8 @@ function determinateClassForStar(index) {
     }
 
 }
+
+.checked {
+    color: orange;
+}
 </style>

@@ -16,6 +16,8 @@ app
     allowedHeaders: ['Content-Type', 'Authorization']
   }));
 
+require('./src/routes/getHomePageMovies')(app)
+
 require('./src/routes/findMovieById')(app)
 
 require('./src/routes/register')(app)

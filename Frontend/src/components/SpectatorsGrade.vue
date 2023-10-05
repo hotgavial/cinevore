@@ -3,6 +3,10 @@ const props = defineProps({
   spectatorsAverageGrade: {
     type: Number,
     default: null
+  },
+  insert: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -25,7 +29,7 @@ function gradeBorder() {
       if (props.spectatorsAverageGrade >= 7) {
           return 'green 0.4rem solid';
       } if (props.spectatorsAverageGrade >= 6) {
-          return 'ykhaki 0.4rem solid';
+          return 'khaki 0.4rem solid';
       } if (props.spectatorsAverageGrade >= 5.0) {
           return 'coral 0.4rem solid';
       } 
@@ -38,8 +42,7 @@ function gradeBorder() {
 
 <template>
 <div class='spectators-grade'>
-    <div>Note Moyenne des spectateurs</div>
-    <div class="spectators-grade__grade" :style="{ color: colorGrade(), border: gradeBorder() }">{{ props.spectatorsAverageGrade || '-' }}</div>
+    <div :class="props.insert ? 'spectators-grade__grade--insert' : 'spectators-grade__grade'" :style="{ color: colorGrade(), border: gradeBorder() }">{{ props.spectatorsAverageGrade || '-' }}</div>
 </div>
 </template>
 
@@ -63,6 +66,13 @@ function gradeBorder() {
             padding: 10px; 
             width: 100px;
             height: 100px;
+
+            &--insert {
+                @extend .spectators-grade__grade;
+                width: 80px;
+                height: 80px;
+                font-size: 1.5rem;
+            }
         }
     }
 </style>

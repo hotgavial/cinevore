@@ -102,4 +102,8 @@ function changeUserGrade(index) {
 .hovered {
     color: blue;
 }
+
+.checked {
+    color: orange;
+}
 </style>
